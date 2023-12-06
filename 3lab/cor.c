@@ -12,10 +12,9 @@ int correlation(int a[], int b[], int n)
 double correlationnorm(int a[], int b[], int n)
 {
     double itog;
-    int sum = 0, suma = 0, sumb = 0;
+    int sum = correlation(a, b, n), suma = 0, sumb = 0;
     for (int i = 0; i < n; i++)
     {
-        sum += a[i] * b[i];
         suma += a[i] * a[i];
         sumb += b[i] * b[i];
     }
