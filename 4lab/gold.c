@@ -3,6 +3,7 @@
 //x = 00001 y = 01000 x2 = 00010 y2 = 00011
 #include <stdio.h>
 
+// Функция циклического сдвига элементов массива вправо
 void shiftRight(int arr[], int size) {
     int temp = arr[size - 1];
 
@@ -13,6 +14,7 @@ void shiftRight(int arr[], int size) {
     arr[0] = temp;
 }
 
+// Функция генерации золотой последовательности на основе x и y
 int generateGoldSequence(int x[], int y[]) {
     int summator;
     int newBit = x[4] ^ y[4];
@@ -29,6 +31,7 @@ int generateGoldSequence(int x[], int y[]) {
     return newBit;
 }
 
+// Вывод таблицы автокорреляции
 void printgold(int n, int golden[], int shift[])
 {
     printf("\n");
@@ -45,6 +48,8 @@ void printgold(int n, int golden[], int shift[])
     int n2 = 31;
     int sh = 0, nsh = 0;
     int itog[n2];
+
+    // Расчет автокорреляции для каждого сдвига
     for (int i = 0; i < n2; ++i){
         for (int j = 0; j < n; ++j)
         {
@@ -72,6 +77,7 @@ void printgold(int n, int golden[], int shift[])
     printf("\n");
 }
 
+// Генерация золотой последовательности и вывод битов на экран
 void rashet(int x[], int y[], int golden[], int shift[], int n)
 {
     for (int i = 0; i < n; ++i) {
@@ -82,6 +88,7 @@ void rashet(int x[], int y[], int golden[], int shift[], int n)
     }
 }
 
+// Вычисление корреляции между двумя последовательностями
 int correlation(int a[], int b[], int n)
 {
     int sum = 0;
@@ -90,19 +97,29 @@ int correlation(int a[], int b[], int n)
     return sum;
 }
 
+// Основная функция программы
 int main() {
     int x[] = {1, 0, 0, 0, 0};
     int y[] = {0, 0, 0, 1, 0};
     int n = 31;
     int golden[n], shift[n];
+
+    // Генерация и вывод золотой последовательности для x и y
     rashet(x, y, golden, shift, n);
     printgold(n, golden, shift);
+
     int x2[] = {0, 1, 0, 0, 0};
     int y2[] = {1, 1, 0, 0, 0};
     int golden2[n];
+    
+    // Генерация и вывод золотой последовательности для x2 и y2
     rashet(x2, y2, golden2, shift, n);
     printgold(n, golden2, shift);
+
+    // Вычисление и вывод взаимной корреляции между двумя последовательностями
     int correltion12 = correlation(golden, golden2, n);
     printf("Взаимная корреляция равна %d\n", correltion12);
+
+    
     return 0;
 }
