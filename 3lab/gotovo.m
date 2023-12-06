@@ -15,14 +15,6 @@ disp(corsa);
 disp("Корреляция b s1")
 disp(corsb);
 
-% Нормализация корреляции
-cornormsa = corr(s1', a');
-cornormsb = corr(s1', b');
-disp("Нормализованная корреляция a s1")
-disp(cornormsa);
-disp("Нормализованная корреляция b s1")
-disp(cornormsb);
-
 % Создание новых сигналов
 a = [0.3 0.2 -0.1 4.2 -2 1.5 0];
 b = [0.3 4 -2.2 1.6 0.1 0.1 0.2];
@@ -43,22 +35,14 @@ disp(maxsdvig);
 
 % Визуализация результатов
 figure;
-subplot(5, 1, 1);
+subplot(3, 1, 1);
 plot(corsa);
 title("Корреляция a s1");
 
-subplot(5, 1, 2);
+subplot(3, 1, 2);
 plot(corsb);
 title("Корреляция b s1");
 
-subplot(5, 1, 3);
-plot(cornormsa);
-title("Нормализованная корреляция a s1");
-
-subplot(5, 1, 4);
-plot(cornormsb);
-title("Нормализованная корреляция b s1");
-
-subplot(5, 1, 5);
+subplot(3, 1, 3);
 plot(lags, cormas);
 title("Корреляция со сдвигом b");
