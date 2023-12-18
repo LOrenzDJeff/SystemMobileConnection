@@ -1,7 +1,11 @@
-import numpy as np
 import functions as func
+import numpy as np
+from scipy.fft import fftshift
+import matplotlib.pyplot as plt
 
-#Отдельная функция для кодирования строчных букв в двоичные числа
+#Повтороение пунктов 1-7 для вывода спектра передаваемого и принимаемого
+#(зашумленного) сигналов
+
 def coder(text):
     mas = []
     for i in text:
@@ -16,42 +20,36 @@ def coder(text):
     
     return code
 
-def main():
-    #Фамилия и имя для передачи
-    name = input("Введите имя и фамилию: ")
+def main(N):
+    #1 point
+    name = "Babenko Denis"
     
-    #Кодирование информации
+    #2 point
     kod = coder(name)
-    func.graphic(kod, "1")
     
-    #Вычисление CRC
+    #3 point
     M = len(kod)
     delete = [1, 0, 1, 1, 1, 1, 1, 1]
     for i in range(len(delete) - 1):
         kod.append(0)
     CRCnum = func.CRC(kod)
-    print("CRC:", CRCnum)
     for i in range(M, len(kod)):
         kod[i] = CRCnum[i - M]
     
-    #Генерация последовательности Голда
+    #4 point
     golden, G = func.Gold()
     for i in range(G):
         kod.append(0)
         kod = func.shiftright(kod)  
     for i in range(G):
         kod[i] = golden[i]
-    func.graphic(kod, "4")
     
-    #Преобразования битов в временные отсчёты сигналов
-    otch = 4
-    signal = np.repeat(kod, otch)
-    func.graphic(signal, "5")
-    length = len(signal)
+    #5 point
+    signal = np.repeat(kod, N)
     
-    #Внесение массива информации в массив нулей
+    #6 point
     bigsignal = [int(0) for i in range(2 * len(signal))]
-    key = int(input("Введите число для вставки в массив: "))
+    key = 120
     while 1 == 1:
         if key > 0 and key < len(signal):
             break
@@ -63,8 +61,28 @@ def main():
             bigsignal[i] = signal[i - key]
         else:
             bigsignal[i] = 0
-            
-    func.graphic(bigsignal, "6")
-    return bigsignal, length
+    first = fftshift(bigsignal)
     
-main()
+    signal = np.asarray(bigsignal)
+    o = 0.15
+    noise = np.random.normal(0, o, len(signal))
+    signoise = []
+    for i in range(len(signal)):
+        signoise.append(noise[i] + signal[i])
+    
+    second = fftshift(signoise)
+    
+    return first, second
+
+base, rec = main(2)
+plt.figure()
+plt.plot(base, "r")
+plt.plot(rec, "g")
+base, rec = main(4)
+plt.figure()
+plt.plot(base, "r")
+plt.plot(rec, "g")
+base, rec = main(8)
+plt.figure()
+plt.plot(base, "r")
+plt.plot(rec, "g")

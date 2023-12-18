@@ -1,12 +1,14 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+#Функция для построения графика
 def graphic(mas, title):
     bukashka = np.asarray(mas)
     plt.figure()
     plt.title(title)
     plt.plot(bukashka)
 
+#Реализация CRC
 def CRC(pack):
     delete = [1, 0, 1, 1, 1, 1, 1, 1]
     ost = [i for i in range(len(delete))]
@@ -31,7 +33,7 @@ def CRC(pack):
         itog.append(ost[i])
     return itog
     
-
+#Сдвиг вправо
 def shiftright(mas):
     temp = mas[len(mas) - 1]
     for i in range(len(mas) - 1, 0, -1):
@@ -39,6 +41,7 @@ def shiftright(mas):
     mas[0] = temp
     return mas
 
+#Функция для генерации послеовательности Голда
 def Gold():
     x = [1, 0, 0, 0, 0]
     y = [0, 0, 0, 1, 0]

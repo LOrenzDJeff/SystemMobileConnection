@@ -2,10 +2,11 @@ import numpy as np
 import transmitter as base
 import functions as func
 
+#Генерация шума и передача массива на приёмник
 def main():
     signal, length = base.main()
     signal = np.asarray(signal)
-    o = 0.1
+    o = float(input("Введите стандратное отклоненние: "))
     noise = np.random.normal(0, o, len(signal))
     signoise = []
     for i in range(len(signal)):

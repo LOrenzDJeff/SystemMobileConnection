@@ -2,6 +2,7 @@ import functions as func
 import numpy as np
 import radio_channel as rd
 
+#Отдельная функция для декодирования двоичных числа в строчные буквы 
 def decoder(code):
     sim = ""
     decode = []
@@ -16,7 +17,7 @@ def decoder(code):
     decode.append(chr(int(sim, 2)))
     return decode
 
-#8 point
+#Синхронизация с сигналом и отброс лишних нулей в массиве
 signal, length = rd.main()
 golden, G = func.Gold()
 golden = np.repeat(golden, 4)
@@ -36,9 +37,9 @@ for i in range(len(signal) - len(golden)):
 synsig = []
 for i in range(pos, pos + length):
     synsig.append(signal[i])
-print(synsig)
+print("Синхросигнал:", synsig)
 
-#9 point
+#Преобразование временных отсчётов в информацию и избавление от шума
 cipher = []
 for i in range(int(len(synsig) / 4)):
     if synsig[i * 4] > 0.5:
@@ -46,23 +47,27 @@ for i in range(int(len(synsig) / 4)):
     else:
         cipher.append(0)
         
-#10 point
+#Удаление последовательности Голда
 ciphernotgold = []
 for i in range(G, len(cipher)):
     ciphernotgold.append(cipher[i])
     
-#11 point
+#Проверка CRC
 CRC = func.CRC(ciphernotgold)
-print(CRC)
+print("CRC:", CRC)
+if 1 in CRC:
+    print("Ошибка CRC")
 
-#12point
-word = []
-for i in range(len(ciphernotgold) - 7):
-    word.append(ciphernotgold[i])
-donemas = decoder(word)
-done = ""
-for i in donemas:
-    if ord(i) > 65 and ord(i) < 90:
-        done += " "
-    done += i
-print(done[1:])
+else:
+    
+    #Удаление CRC и декодирование битов информации в буквы
+    word = []
+    for i in range(len(ciphernotgold) - 7):
+        word.append(ciphernotgold[i])
+    donemas = decoder(word)
+    done = ""
+    for i in donemas:
+        if ord(i) > 65 and ord(i) < 90:
+            done += " "
+        done += i
+    print(done[1:])
