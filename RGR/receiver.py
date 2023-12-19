@@ -21,6 +21,7 @@ def decoder(code):
 signal, length = rd.main()
 golden, G = func.Gold()
 golden = np.repeat(golden, 4)
+autocor = []
 for i in range(len(signal) - len(golden)):
     suma = 0
     for j in range(len(golden)):
@@ -28,16 +29,19 @@ for i in range(len(signal) - len(golden)):
             suma = suma + (golden[j] * signal[i + j])
         except IndexError:
             break
+    autocor.append(suma)
     if i == 0:
         maximum = suma
         pos = 0
     elif maximum < suma:
         maximum = suma
         pos = i 
+print("Автокор: ", maximum)
 synsig = []
 for i in range(pos, pos + length):
     synsig.append(signal[i])
-print("Синхросигнал:", synsig)
+func.graphic(autocor, "Автокорреляия")
+func.graphic(synsig, "Синхросигнал")
 
 #Преобразование временных отсчётов в информацию и избавление от шума
 cipher = []

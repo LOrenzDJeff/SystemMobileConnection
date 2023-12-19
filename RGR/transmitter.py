@@ -22,7 +22,7 @@ def main():
     
     #Кодирование информации
     kod = coder(name)
-    func.graphic(kod, "1")
+    func.graphic(kod, "Кодирование символов")
     
     #Вычисление CRC
     M = len(kod)
@@ -41,12 +41,12 @@ def main():
         kod = func.shiftright(kod)  
     for i in range(G):
         kod[i] = golden[i]
-    func.graphic(kod, "4")
+    func.graphic(kod, "Кодирование с голдом и CRC")
     
     #Преобразования битов в временные отсчёты сигналов
     otch = 4
     signal = np.repeat(kod, otch)
-    func.graphic(signal, "5")
+    func.graphic(signal, "Отсчёты")
     length = len(signal)
     
     #Внесение массива информации в массив нулей
@@ -64,7 +64,7 @@ def main():
         else:
             bigsignal[i] = 0
             
-    func.graphic(bigsignal, "6")
+    func.graphic(bigsignal, "Сигнал с передатчика")
     return bigsignal, length
     
 main()

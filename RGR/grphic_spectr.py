@@ -1,6 +1,6 @@
 import functions as func
 import numpy as np
-from scipy.fft import fftshift
+from scipy.fft import fftshift, fft
 import matplotlib.pyplot as plt
 
 #Повтороение пунктов 1-7 для вывода спектра передаваемого и принимаемого
@@ -61,7 +61,7 @@ def main(N):
             bigsignal[i] = signal[i - key]
         else:
             bigsignal[i] = 0
-    first = fftshift(bigsignal)
+    #first = fftshift(fft(bigsignal))
     
     signal = np.asarray(bigsignal)
     o = 0.15
@@ -70,19 +70,16 @@ def main(N):
     for i in range(len(signal)):
         signoise.append(noise[i] + signal[i])
     
-    second = fftshift(signoise)
+    second = fftshift(fft(signoise[110:500]))
     
-    return first, second
+    return second
 
-base, rec = main(2)
+rec = main(2)
+man = main(4)
+dig = main(8)
+#plt.plot(base, "g")
 plt.figure()
-plt.plot(base, "r")
+plt.title("Спектры сигналов")
 plt.plot(rec, "g")
-base, rec = main(4)
-plt.figure()
-plt.plot(base, "r")
-plt.plot(rec, "g")
-base, rec = main(8)
-plt.figure()
-plt.plot(base, "r")
-plt.plot(rec, "g")
+plt.plot(man, "r")
+plt.plot(dig, "b")

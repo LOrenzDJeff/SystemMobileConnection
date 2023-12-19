@@ -11,7 +11,7 @@ def main():
     signoise = []
     for i in range(len(signal)):
         signoise.append(noise[i] + signal[i])
-    func.graphic(signoise, "7")
+    func.graphic(signoise, "Сигнал с шумом")
     return signoise, length
 
 main()

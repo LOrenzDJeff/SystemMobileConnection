@@ -50,7 +50,7 @@ void printgold(int n, int golden[], int shift[])
     int itog[n2];
 
     // Расчет автокорреляции для каждого сдвига
-    for (int i = 0; i < n2; ++i){
+    for (int i = 0; i < n2 + 1; ++i){
         for (int j = 0; j < n; ++j)
         {
             if (golden[j] == shift[j])
